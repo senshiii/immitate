@@ -39,10 +39,6 @@ The server builds itself upon a [configuration](#configuration) object. The conf
 ```js
 // First import all the good stuff
 const { createServer, DataTypes, CrudRoutes } = require("immitate");
-```
-
-```js
-// ... continued
 
 // Define your Data Models
 const dataModels = {
@@ -87,14 +83,8 @@ const dataModels = {
     includeTimestamps: true,
   },
 };
-```
 
-```js
-// ... continued
-
-// Defining the routes for the models and the endpoints we want on these routes
-const { CrudRoutes } = require('awesom-rest')
-
+// Defining the routes we want to use with the models
 const restRoutes = [
   {
     resource: "user", // this allows us to make requests to /user
@@ -114,11 +104,6 @@ const restRoutes = [
     ],
   },
 ];
-```
-
-```js
-// ... conitnued
-// Creating a config object
 
 const config = {
   port: 5000,
