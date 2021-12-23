@@ -14,15 +14,10 @@
   "keywords": [
     "express",
     "immitate",
-    "immitate js",
-    "rest api",
-    "npm package",
-    "fake rest api",
-    "fake rest",
-    "fake api",
-    "dummy rest api",
-    "dummy server",
-    "dummy api"
+    "dummy",
+    "rest",
+    "fake",
+    "json"
   ],
   "module": "dist/immitate.esm.js",
   "repository": {

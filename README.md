@@ -146,7 +146,7 @@ The following options can be set on the configuration object
 | port   | The port on which the server listens | Integer | 8080 | ❌ |
 | db     | Configuration options for the json db file | String specifying the name od the db json file or a [DB Options](#db-options) option | db.json | ❌ |
 | models | User-defined Data Models to be used for storing data | An object in which every property represents a new data model and contains a [model](#model) object. | None | ✔️ |
-| routes | Lists the routes to be set for different resources and models. | An array of [Route](#route-obj) objects | None | ✔️ |
+| routes | Lists the routes to be set for different resources and models. | An array of [Route](#route) objects | None | ✔️ |
 
 ## DB Options
 
