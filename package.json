@@ -17,7 +17,8 @@
     "dummy",
     "rest",
     "fake",
-    "json"
+    "json",
+    "server"
   ],
   "module": "dist/immitate.esm.js",
   "repository": {
