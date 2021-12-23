@@ -1,0 +1,70 @@
+{
+  "name": "immitate",
+  "version": "1.0.0",
+  "description": "A highly configurable, feature packed fake rest api server",
+  "author": "Sayan Das",
+  "license": "MIT",
+  "main": "dist/immitate.cjs.production.min.js",
+  "type": "commonjs",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "express",
+    "immitate",
+    "immitate js",
+    "rest api",
+    "npm package",
+    "fake rest api",
+    "fake rest",
+    "fake api",
+    "dummy rest api",
+    "dummy server",
+    "dummy api"
+  ],
+  "module": "dist/immitate.esm.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/senshiii/immitate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/senshiii/immitate/issues"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "devDependencies": {
+    "@types/ansi-colors": "^3.2.2",
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/figlet": "^1.5.4",
+    "@types/jest": "^27.0.3",
+    "@types/lodash": "^4.14.178",
+    "axios": "^0.24.0",
+    "husky": "^7.0.4",
+    "tsdx": "^0.7.2",
+    "tslib": "^2.3.1",
+    "typescript": "^3.9.10"
+  },
+  "dependencies": {
+    "ansi-colors": "^4.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "figlet": "^1.5.2",
+    "lodash": "^4.17.21",
+    "log-utils": "^1.0.0"
+  }
+}
