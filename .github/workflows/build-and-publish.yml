@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: ./dist
+          path: dist
 
   publish:
       name: Publish to npm
@@ -55,6 +55,7 @@ jobs:
           uses: actions/download-artifact@v2
           with:
             name: dist
+            path: dist
 
         - name: Setup Node
           uses: actions/setup-node@v2
