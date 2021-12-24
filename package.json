@@ -41,6 +41,14 @@
       "pre-commit": "tsdx lint"
     }
   },
+  "dependencies": {
+    "ansi-colors": "^4.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "figlet": "^1.5.2",
+    "lodash": "^4.17.21",
+    "log-utils": "^1.0.0"
+  },
   "devDependencies": {
     "@types/ansi-colors": "^3.2.2",
     "@types/axios": "^0.14.0",
@@ -53,14 +61,7 @@
     "husky": "^7.0.4",
     "tsdx": "^0.7.2",
     "tslib": "^2.3.1",
-    "typescript": "^3.9.10"
-  },
-  "dependencies": {
-    "ansi-colors": "^4.1.1",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "figlet": "^1.5.2",
-    "lodash": "^4.17.21",
-    "log-utils": "^1.0.0"
+    "typescript": "^3.9.10",
+    "serialize-javascript": ">=3.1.0"
   }
 }
