@@ -58,7 +58,7 @@ jobs:
             registry-url: 'https://registry.npmjs.org/'
           
         - name: FS Contents
-          uses: ls
+          run: ls
 
         - name: Publish
           run: npm publish --access public --ignore-scripts
