@@ -1,6 +1,6 @@
 {
   "name": "immitate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A highly configurable, feature packed fake rest api server",
   "author": "Sayan Das",
   "license": "MIT",
