@@ -34,5 +34,4 @@
     "noEmit": true,
     "removeComments": true
   },
-  "exclude": ["src/old-src"]
 }

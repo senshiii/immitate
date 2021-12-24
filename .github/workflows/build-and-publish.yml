@@ -51,6 +51,9 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v2
 
+        - name: FS Before downloading artifact
+          run: ls
+
         - name: Download build artifact
           uses: actions/download-artifact@v2
           with:
@@ -63,7 +66,7 @@ jobs:
             node-version: '16.x'
             registry-url: 'https://registry.npmjs.org/'
           
-        - name: FS Contents
+        - name: FS After Downloading Artifact
           run: ls
 
         - name: Publish
