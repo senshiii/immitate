@@ -1,9 +1,8 @@
 import { StringIndexedObject } from '../types';
-import { isNull, isUndefined } from 'lodash';
 
 export default class Utils {
   static isNullOrUndefined(val: any): boolean {
-    return isNull(val) || isUndefined(val);
+    return val == null || val == undefined;
   }
 
   static objectHasKey(object: StringIndexedObject, key: string): boolean {

@@ -12,14 +12,14 @@ export default class Validator extends SchemaValidator {
 	}
 
 	createOperationValidation(model: Model, body: StringIndexedObject): ValidationResponse {
-		const { schema, strictStructure, includeTimestamps } = model;
+		const { schema, strict, timestamps } = model;
 
 		if (typeof schema !== 'object') {
 			throw new Error('Invalid Schema');
 		}
 
 		// Checking for timestamps being manually set
-		if (includeTimestamps && (Utils.objectHasKey(body, 'createdAt') || Utils.objectHasKey(body, 'updatedAt'))) {
+		if (timestamps && (Utils.objectHasKey(body, 'createdAt') || Utils.objectHasKey(body, 'updatedAt'))) {
 			return new ValidationResponse(false, ['Cannot set timestamp properties manually when']);
 		} else if (Utils.objectHasKey(body, 'id')) {
 			// Checking for manually set id
@@ -27,7 +27,7 @@ export default class Validator extends SchemaValidator {
 		}
 
 		// Check for unknown/extra key if schema is strict
-		if (typeof body === 'object' && strictStructure) {
+		if (typeof body === 'object' && strict) {
 			const extraKey = Validator.hasExtraKey(schema, body);
 			if (extraKey) return new ValidationResponse(false, [`Unknown property ${extraKey}`]);
 		}
@@ -72,7 +72,7 @@ export default class Validator extends SchemaValidator {
 	}
 
 	updateOperationValidation(model: Model, body: StringIndexedObject): ValidationResponse {
-		const { schema, strictStructure, includeTimestamps } = model;
+		const { schema, strict, timestamps } = model;
 
 		// Checking if both parameters are objects
 		if (typeof schema !== 'object') {
@@ -80,14 +80,14 @@ export default class Validator extends SchemaValidator {
 		}
 
 		// Checking for automatic keys
-		if (includeTimestamps && (Utils.objectHasKey(body, 'createdAt') || Utils.objectHasKey(body, 'updatedAt'))) {
+		if (timestamps && (Utils.objectHasKey(body, 'createdAt') || Utils.objectHasKey(body, 'updatedAt'))) {
 			return new ValidationResponse(false, ['Cannot update timestamp properties manually']);
 		} else if (Utils.objectHasKey(body, 'id')) {
 			return new ValidationResponse(false, ['ID is a reserved field and cannot be set manually']);
 		}
 
 		// Check for unknown/extra key if schema is strict
-		if (typeof body === 'object' && strictStructure) {
+		if (typeof body === 'object' && strict) {
 			const extraKey = Validator.hasExtraKey(schema, body);
 			if (extraKey) return new ValidationResponse(false, [`Unknown property ${extraKey}`]);
 		}

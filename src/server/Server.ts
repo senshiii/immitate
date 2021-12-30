@@ -1,13 +1,14 @@
 import express, { Express, NextFunction, Request, Response } from 'express';
 import figlet from 'figlet';
 import cors from 'cors';
-import { ConfigOptions, DefaultRoutes, Model } from '../types';
+import { ConfigOptions, DefaultRoutes, Model, Templates } from '../types';
 import Database from './data/Database';
 import path from 'path';
 import Utils from './Util';
 import FileOps from './data/FileOps';
 import Validator from './validation/Validator';
 import Logger from '../logging/Logger';
+import { ECommConfig, SocialMediaConfig } from '../config/template-configs'
 
 const DB_FILE_NAME = 'immitate.db.json';
 
@@ -33,15 +34,45 @@ export default class Server {
 		return this.instance;
 	}
 
+	private async printLogo(){
+		// Printing the Big IMMITATE Logo
+		try {
+			console.log(
+				await new Promise((resolve, reject) =>
+					figlet('IMMITATE', (err, data) => {
+						if (err) reject(err);
+						resolve(data as string);
+					})
+				)
+			);
+		} catch (error) {}
+	}
+
+	async configureServerUsingTemplate(temp: string){
+		switch(temp){
+			case Templates.E_COMM: this.setUpEcomm();break;
+			case Templates.SOCIAL_MEDIA:  this.setUpSocialMedia(); break;
+			default: throw "Invalid Template";
+		}
+	}
+
+	private async setUpEcomm() {
+		await this.configureServer(ECommConfig);
+	}
+	
+	private async setUpSocialMedia() {
+		await this.configureServer(SocialMediaConfig);
+	}
+
 	async configureServer(config: ConfigOptions) {
 		// TODO: Validate Config Object
 		const port = config['port'] ?? 8080;
 		const models = config['models'];
-		const routes = config['routes'];
 		let dbOpt = config['db'];
 		let dbPath: string;
 		let removeExisting = false;
 
+		// Determining the DB File Name
 		if (dbOpt) {
 			if (typeof dbOpt == 'string') dbPath = dbOpt;
 			else if (typeof dbOpt == 'object') {
@@ -53,16 +84,7 @@ export default class Server {
 			dbPath = DB_FILE_NAME;
 		}
 
-		try {
-			console.log(
-				await new Promise((resolve, reject) =>
-					figlet('IMMITATE', (err, data) => {
-						if (err) reject(err);
-						resolve(data as string);
-					})
-				)
-			);
-		} catch (error) {}
+		await this.printLogo();
 
 		// Setting Db Path
 		this.dbInstance.dbPath = path.resolve(dbPath!);
@@ -79,12 +101,13 @@ export default class Server {
 		});
 
 		// Registering Routes
-		routes.forEach((r) => {
-			const modelName = r.model,
-				resName = r.resource;
-			Logger.info(`Discovered model - '${Utils.capitalize(modelName)}' identified by resource name - '${resName}'`);
-			r.routes.forEach((route) => this.registerEndpoint(route, modelName, resName, models[modelName]));
-			Logger.print('\n');
+		Object.entries(models).forEach(([key, model]) => {
+			model['routes'].forEach((route) => {
+				const endpoint = key.toLowerCase();
+				Logger.info(`Discovered model - '${Utils.capitalize(key)}' identified by resource name - '${endpoint}'`);
+				this.registerEndpoint(route, key, endpoint, model);
+				Logger.print('\n');
+			});
 		});
 
 		// GLOBAL ERROR HANDLER
@@ -119,8 +142,8 @@ export default class Server {
 		});
 	}
 
-	private registerCreateRoute(modelName: string, resName: string, model: Model) {
-		this.app.post(`/${resName}`, (req: Request, res: Response, next: NextFunction) => {
+	private registerCreateRoute(modelName: string, endpoint: string, model: Model) {
+		this.app.post(`/${endpoint}`, (req: Request, res: Response, next: NextFunction) => {
 			// console.log('[registerCreateRoute] body', req.body);
 
 			const { success, errors, message } = this.validator.createOperationValidation(model, req.body);
@@ -136,8 +159,8 @@ export default class Server {
 		});
 	}
 
-	private registerGetByIdRoute(modelName: string, resName: string) {
-		this.app.get(`/${resName}/:id`, (req: Request, res: Response, next: NextFunction) => {
+	private registerGetByIdRoute(modelName: string, endpoint: string) {
+		this.app.get(`/${endpoint}/:id`, (req: Request, res: Response, next: NextFunction) => {
 			this.dbInstance
 				.findById(modelName, req.params.id)
 				.then((entities) => res.json(entities))
@@ -145,8 +168,8 @@ export default class Server {
 		});
 	}
 
-	private registerGetRoute(modelName: string, resName: string) {
-		this.app.get(`/${resName}`, (req: Request, res: Response, next: NextFunction) => {
+	private registerGetRoute(modelName: string, endpoint: string) {
+		this.app.get(`/${endpoint}`, (req: Request, res: Response, next: NextFunction) => {
 			this.dbInstance
 				.findAll(modelName, req.query)
 				.then((entities) => res.json(entities))
@@ -154,8 +177,8 @@ export default class Server {
 		});
 	}
 
-	private registerDeleteRoute(modelName: string, resName: string) {
-		this.app.delete(`/${resName}`, (req: Request, res: Response, next: NextFunction) => {
+	private registerDeleteRoute(modelName: string, endpoint: string) {
+		this.app.delete(`/${endpoint}`, (req: Request, res: Response, next: NextFunction) => {
 			this.dbInstance
 				.delete(modelName, req.query)
 				.then((servRes) => res.json(servRes))
@@ -163,8 +186,8 @@ export default class Server {
 		});
 	}
 
-	private registerDeleteByIdRoute(modelName: string, resName: string) {
-		this.app.delete(`/${resName}/:id`, (req: Request, res: Response, next: NextFunction) => {
+	private registerDeleteByIdRoute(modelName: string, endpoint: string) {
+		this.app.delete(`/${endpoint}/:id`, (req: Request, res: Response, next: NextFunction) => {
 			this.dbInstance
 				.deleteById(modelName, req.params.id)
 				.then((servRes) => res.json(servRes))
@@ -172,75 +195,75 @@ export default class Server {
 		});
 	}
 
-	private registerUpdateByIdRoutes(modelName: string, resName: string, model: Model) {
-		this.app.put(`/${resName}/:id`, (req: Request, res: Response, next: NextFunction) => {
+	private registerUpdateByIdRoutes(modelName: string, endpoint: string, model: Model) {
+		this.app.put(`/${endpoint}/:id`, (req: Request, res: Response, next: NextFunction) => {
 			const { success, errors, message } = this.validator.updateOperationValidation(model, req.body);
 			if (!success) {
 				return res.status(400).json({ status: 400, message, errors });
 			}
 
 			this.dbInstance
-				.updateById(modelName, req.params.id, req.body, model['includeTimestamps'] ?? false)
+				.updateById(modelName, req.params.id, req.body, model['timestamps'] ?? false)
 				.then((updatedEntity) => res.json(updatedEntity))
 				.catch((err) => next(err));
 		});
 	}
 
-	private registerUpdateRoute(modelName: string, resName: string, model: Model) {
-		this.app.put(`/${resName}`, (req: Request, res: Response, next: NextFunction) => {
+	private registerUpdateRoute(modelName: string, endpoint: string, model: Model) {
+		this.app.put(`/${endpoint}`, (req: Request, res: Response, next: NextFunction) => {
 			const { success, errors, message } = this.validator.updateOperationValidation(model, req.body);
 			if (!success) {
 				return res.status(400).json({ status: 400, message, errors });
 			}
 
 			this.dbInstance
-				.update(modelName, req.body, model['includeTimestamps'] ?? false, req.query)
+				.update(modelName, req.body, model['timestamps'] ?? false, req.query)
 				.then((updatedEntities) => res.json(updatedEntities))
 				.catch((err) => next(err));
 		});
 	}
 
-	private registerEndpoint(route: DefaultRoutes, modelName: string, resName: string, model: Model) {
+	private registerEndpoint(route: DefaultRoutes, modelName: string, endpoint: string, model: Model) {
 		if (route === DefaultRoutes.ALL) Logger.ok(`Registered all routes`, '\t');
-		else Logger.ok(`Registered ${route} route`, '\t');
+		else Logger.ok(`Registered endpoint ${route}`, '\t');
 
 		switch (route) {
 			case DefaultRoutes.ALL:
-				this.registerCreateRoute(modelName, resName, model);
-				this.registerGetByIdRoute(modelName, resName);
-				this.registerGetRoute(modelName, resName);
-				this.registerUpdateRoute(modelName, resName, model);
-				this.registerUpdateByIdRoutes(modelName, resName, model);
-				this.registerDeleteByIdRoute(modelName, resName);
-				this.registerDeleteRoute(modelName, resName);
+				this.registerCreateRoute(modelName, endpoint, model);
+				this.registerGetByIdRoute(modelName, endpoint);
+				this.registerGetRoute(modelName, endpoint);
+				this.registerUpdateRoute(modelName, endpoint, model);
+				this.registerUpdateByIdRoutes(modelName, endpoint, model);
+				this.registerDeleteByIdRoute(modelName, endpoint);
+				this.registerDeleteRoute(modelName, endpoint);
 				break;
 
 			case DefaultRoutes.CREATE:
-				this.registerCreateRoute(modelName, resName, model);
+				this.registerCreateRoute(modelName, endpoint, model);
 				break;
 
 			case DefaultRoutes.GET_BY_ID:
-				this.registerGetByIdRoute(modelName, resName);
+				this.registerGetByIdRoute(modelName, endpoint);
 				break;
 
 			case DefaultRoutes.GET:
-				this.registerGetRoute(modelName, resName);
+				this.registerGetRoute(modelName, endpoint);
 				break;
 
 			case DefaultRoutes.UPDATE:
-				this.registerUpdateRoute(modelName, resName, model);
+				this.registerUpdateRoute(modelName, endpoint, model);
 				break;
 
 			case DefaultRoutes.UPDATE_BY_ID:
-				this.registerUpdateByIdRoutes(modelName, resName, model);
+				this.registerUpdateByIdRoutes(modelName, endpoint, model);
 				break;
 
 			case DefaultRoutes.DELETE_BY_ID:
-				this.registerDeleteByIdRoute(modelName, resName);
+				this.registerDeleteByIdRoute(modelName, endpoint);
 				break;
 
 			case DefaultRoutes.DELETE:
-				this.registerDeleteRoute(modelName, resName);
+				this.registerDeleteRoute(modelName, endpoint);
 				break;
 
 			default:

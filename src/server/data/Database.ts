@@ -95,7 +95,7 @@ export default class Database implements DbOperations {
 	}
 
 	create(modelName: string, model: Model, body: StringIndexedObject): Promise<EntityLike> {
-		const { schema, includeTimestamps, strictStructure } = model;
+		const { schema, timestamps, strict } = model;
 
 		// TODO: ADD VALIDATION
 
@@ -106,11 +106,11 @@ export default class Database implements DbOperations {
 				id: Database.generatedId(),
 				...JSON.parse(JSON.stringify(body)),
 			},
-			strictStructure ?? false
+			strict ?? false
 		) as EntityLike;
 
 		// Add TIMESTAMPS
-		if (includeTimestamps) {
+		if (timestamps) {
 			const date = new Date().toLocaleString();
 			entity['createdAt'] = date;
 			entity['updatedAt'] = date;

@@ -1,6 +1,9 @@
-import { createServer, CrudRoutes, DataTypes } from '../src/index';
+import { createServer, CrudRoutes, DataTypes, createServerWithTemplate } from '../src/index';
 import { ConfigOptions } from '../src/types';
 import axios from 'axios';
+import path from 'path';
+import fs from 'fs';
+// import kill from 'cross-port-killer';
 
 describe('Creating the Server', () => {
 	const response = {
@@ -9,11 +12,9 @@ describe('Creating the Server', () => {
 		docs: 'LINK_TO_DOCS',
 	};
 
-	test('Using JS Object', async () => {
+	describe(' with custom config', () => {
 		const config: ConfigOptions = {
-			port: 5050,
 			db: {
-        name: 'using-object.db.json',
 				removeExisting: true,
 			},
 			models: {
@@ -21,32 +22,38 @@ describe('Creating the Server', () => {
 					schema: {
 						name: DataTypes.String,
 					},
-					includeTimestamps: true,
+					routes: [CrudRoutes.ALL],
+					timestamps: true,
 				},
 			},
-			routes: [
-				{
-					resource: 'user',
-					model: 'User',
-					routes: [CrudRoutes.ALL],
-				},
-			],
 		};
 
-		await createServer(config);
 
-		const res = await axios.get('http://localhost:5050/');
-		const data = res.data;
+		afterEach(() => {
+			// Deleting Db File
+			fs.unlinkSync(path.resolve('immitate.db.json'));
+		});
 
-		expect(data).toStrictEqual(response);
+		test('using js object', async () => {
+			await createServer({ port: 5001, ...config });
+			const res = await axios.get('http://localhost:5001/');
+			const data = res.data;
+			expect(data).toStrictEqual(response);
+		});
+
+		test('using JSON cofig file', async () => {
+			const configFilePath = path.resolve(__dirname, 'config.json');
+			// Creating Config File
+			fs.writeFileSync(configFilePath, JSON.stringify({ port: 5002, ...config }));
+			// Starting the server
+			await createServer(configFilePath);
+			// Creating a request
+			const res = await axios.get(`http://localhost:5002/`);
+			const data = res.data;
+			expect(data).toStrictEqual(response);
+			// Deleting config file
+			fs.unlinkSync(configFilePath);
+		});
 	});
 
-	test('Using Config JSON File', async () => {
-		await createServer('./config.json');
-		const res = await axios.get('http://localhost:5050/');
-		const data = res.data;
-		expect(data).toStrictEqual(response);
-	});
-
-	afterAll((done) => done());
 });

@@ -1,7 +1,37 @@
+# Logs
+logs
 *.log
-.DS_Store
-node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Build folder
 dist
-.rts2**
+
+# Vs Code settings
+.vscode
+
+# Dependency directories
+node_modules/
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_esm/
+.rts2_cache_umd/
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variable files
 .env
-config.json
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local

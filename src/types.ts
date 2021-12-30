@@ -16,6 +16,11 @@ export enum DefaultRoutes {
 	ALL = 'ALL',
 }
 
+export enum Templates {
+	E_COMM = "e-commerce",
+	SOCIAL_MEDIA = "social-media",
+}
+
 export interface Error {
 	status: number;
 	message: string;
@@ -52,14 +57,9 @@ export interface SchemaItem extends ValidationOptions {
 export type Schema = { [x: string]: SchemaItem | DataType | Schema };
 export interface Model {
 	schema: Schema;
-	strictStructure?: boolean; // Determines whether flexibility should be allowed in the structure
-	includeTimestamps?: boolean;
-}
-
-export declare interface Route {
-	resource: string;
-	model: string;
 	routes: Array<DefaultRoutes>;
+	strict?: boolean; // Determines whether flexibility should be allowed in the structure
+	timestamps?: boolean;
 }
 
 export declare interface DbOptions {
@@ -71,7 +71,6 @@ export declare interface ConfigOptions {
 	port?: number;
 	db?: DbOptions | string;
 	models: { [x: string]: Model };
-	routes: Array<Route>;
 }
 
 export type NumOrStr = number | string;

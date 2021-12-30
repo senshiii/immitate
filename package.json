@@ -34,15 +34,17 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test"
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "commit": "git cz",
+    "semantic-release": "semantic-release"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "ansi-colors": "^4.1.1",
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "figlet": "^1.5.2",
@@ -50,6 +52,8 @@
     "log-utils": "^1.0.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "@types/ansi-colors": "^3.2.2",
     "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.12",
@@ -58,12 +62,17 @@
     "@types/jest": "^27.0.3",
     "@types/lodash": "^4.14.178",
     "axios": "^0.24.0",
-    "husky": "^7.0.4",
-    "tsdx": "^0.7.2",
-    "tslib": "^2.3.1",
-    "typescript": "^3.9.10",
-    "serialize-javascript": ">=3.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.5.0",
     "node-notifier": ">=8.0.1",
+    "semantic-release": "^18.0.1",
+    "serialize-javascript": ">=3.1.0",
+    "tsdx": "^0.7.2",
     "yargs-parser": ">=13.1.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

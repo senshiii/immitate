@@ -9,5 +9,11 @@ export const createServer = async (config: string | ConfigOptions) => {
 	else throw new Error('Invalid Config');
 };
 
+export const createServerWithTemplate = async (template: string) => {
+	const server = Server.getInstance();
+	server.configureServerUsingTemplate(template);
+}
+
 export * as CrudRoutes from './crud-routes';
 export * as DataTypes from './data-types';
+
