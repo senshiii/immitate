@@ -20,7 +20,7 @@ export enum Templates {
 	E_COMM = "e-commerce",
 	SOCIAL_MEDIA = "social-media",
 }
-
+//comment
 export interface Error {
 	status: number;
 	message: string;
