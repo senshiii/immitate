@@ -52,10 +52,6 @@ jobs:
         with:
           name: dist
           path: dist
-      
-      - run: |
-              ls
-              cat /home/runner/work/_temp/.npmrc
 
       - name: Setup Node
         uses: actions/setup-node@v2
