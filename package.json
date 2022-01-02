@@ -4,7 +4,7 @@
   "description": "A highly configurable, feature packed fake rest api server",
   "author": "Sayan Das",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/app/index.js",
   "type": "commonjs",
   "files": [
     "dist",
@@ -20,7 +20,7 @@
     "json",
     "server"
   ],
-  "module": "dist/immitate.esm.js",
+  "module": "dist/app/index.esm.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/senshiii/immitate.git"
