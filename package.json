@@ -32,10 +32,11 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
+    "build:app": "npx rollup --config app.rollup.config.js",
+    "prebuild": "rm -rf dist",
+    "build": "npm run build:app",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "commit": "git cz",
     "semantic-release": "semantic-release"
   },
@@ -52,6 +53,9 @@
     "log-utils": "^1.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.2",
+    "@rollup/plugin-typescript": "^8.3.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
     "@types/ansi-colors": "^3.2.2",
@@ -59,15 +63,16 @@
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/figlet": "^1.5.4",
-    "@types/jest": "^27.0.3",
+    "@types/jest": "^27.4.0",
     "@types/lodash": "^4.14.178",
     "axios": "^0.24.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.5.0",
     "node-notifier": ">=8.0.1",
+    "rollup": "^2.62.0",
     "semantic-release": "^18.0.1",
     "serialize-javascript": ">=3.1.0",
-    "tsdx": "^0.7.2",
+    "ts-jest": "^27.1.2",
     "yargs-parser": ">=13.1.2"
   },
   "config": {
