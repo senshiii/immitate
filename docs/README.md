@@ -270,8 +270,13 @@ By participating in this project, you agree to abide by our [Code of Conduct][co
 
 We LOVE and INVITE all kinds of contribution. If you wish to contribute to Immitate, please go through the [guidelines][contributing] first.
 
+# Changelog
+
+Read the changelog [here][Changelog]
+
 [code-of-conduct]: /code-of-conduct
 [contributing]: /contribute
 [examples]: https:/github.com/senshiii/immitate/tree/master/examples
 [social-media]: ./templates/social-media.md
 [e-commerce]: ./templates/e-commerce.md
+[Changelog]: /changelog
