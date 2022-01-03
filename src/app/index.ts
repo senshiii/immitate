@@ -11,9 +11,9 @@ const createServer = async (config: string | ConfigOptions) => {
 	else throw new Error('Invalid Config');
 };
 
-const createServerWithTemplate = async (template: string) => {
+const createWithTemplate = async (template: string) => {
 	const server = Server.getInstance();
 	server.configureServerUsingTemplate(template);
 };
 
-export default { createServer, createServerWithTemplate, CrudRoutes, DataTypes };
+export default { createServer, createWithTemplate, CrudRoutes, DataTypes };

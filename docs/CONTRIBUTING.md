@@ -1,3 +1,5 @@
+Back to [home](./README.md)
+
 # Contributon Guidelines
 
 Welcome!! First things first, a massive thank you for considering contributing to Immitate. We love receiving contributions from our community, so thanks for stopping by! There are many ways to contribute, including reporting bugs, improving documentation, submitting feature requests, reviewing new submissions, or contributing code that can be incorporated into the project.
@@ -21,9 +23,7 @@ By participating in this project, you agree to abide by our [Code of Conduct][Co
 
 # Feature Requests
 
-Please create a new GitHub issue for any major changes and enhancements that you wish to make. Please provide the feature you would like to see, why you need it, and how it will work. This will clearly outline the changes and benefits of the feature. [Discuss][Discussion-Issue] your ideas transparently and get community feedback before proceeding.
-
-Small Changes can directly be crafted and submitted to the GitHub Repository as a Pull Request. See the section about [Pull Request Submission Guidelines](#pull-request-submission-guidelines), and for detailed information the core development documentation.
+Please create a new GitHub issue for any major changes and enhancements that you wish to make. Please provide the feature you would like to see, why you need it, and how it will work. This will clearly outline the changes and benefits of the feature. [Discuss][Discussion-Issue] your ideas transparently and get community feedback before proceeding. Small Changes can directly be crafted and submitted to the GitHub Repository as a Pull Request.
 
 # Reporting a Bug
 
@@ -39,16 +39,16 @@ Please provide detailed information is the issue template. That way it is easier
 
 Follow the below steps to contribute code to the project.
 
-1. ## Fork the repository
+1. ### Fork the repository
     First things first, go to the [repository page][GHRepo] and fork the repository to your own GitHub account.
 
-1. ## Clone the Repository
+1. ### Clone the Repository
     Get the clone link from your forked repository. Open a terminal ( such as `bash`, `powershell`, etc.) and execute the following command to clone the repository.
     ```
-    git clone clone_link
+    git clone https://github.com/senshiii/immitate.git
     ```
 
-2. ## Create a new branch
+2. ### Create a new branch
     Before you start working, it is recommended to create a new branch for the work you intend to do (bug fixing, implementing a new feature, etc). This helps your code to be separated from the master branch, let's you experiment freely and is also a *best practice*. 
 
     Create a new branch by executing the below command in your terminal. Replace [name_of_your_new_branch] with an appropriate name for your branch. An appropriate name is short and sweet and clearly indicates the motive of the changes made in this branch. 
@@ -56,21 +56,21 @@ Follow the below steps to contribute code to the project.
     git checkout -b [name_of_your_new_branch]
     ```
 
-3. ## Install Dependencies
+3. ### Install Dependencies
     ```
     npm install
     ```
 
-4. ## Do your thing
+4. ### Do your thing
     Now it is time for you to do your magic. *Expecto Contributum* :p
 
-5. ## Testing
+5. ### Testing
     Please test your code locally before submitting. Please write the unit tests and integration tests that cover your changes thoroughly. If your pull request reduces our test coverage because it lacks tests then it will be rejected. Make sure your tests pass otherwise your pull request will be rejected.
 
-6. ## Add your information 
+6. ### Add your information 
     Contributors are who power this project. We love to showcase our contributors to the entire community. Please add your details to the [contributors.yaml][Contrbibutors-YAML] file in the format below.
 
-7. ## Create a Pull Request (PR)
+7. ### Create a Pull Request (PR)
     The final step is to create the [Pull Request][Pull-Request]. Read the [pull request process](#pull-request-process) to know more. 
 
 # Pull Request Process
@@ -97,7 +97,7 @@ Once a PR has been submitted, your changes will be reviewed and constructive fee
 
 
 [Code-Of-Conduct]: ./CODE_OF_CONDUCT.md
-[Docs]: ./
+[Docs]: https://senshiii.github.io/immitate/
 [Issues]: https://github.com/senshiii/immitate/issues
 [Discussion-Issue]: https://www.google.com
 [Pull-Request]: https://github.com/senshiii/immitate/pulls
