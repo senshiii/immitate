@@ -1,6 +1,6 @@
-import { DefaultRoutes, DataType } from '../types'
+import { DefaultRoutes, DataType, ConfigOptions } from '../types';
 
-export const ECommConfig = {
+export const ECommConfig: ConfigOptions = {
 	models: {
 		User: {
 			schema: {
@@ -69,7 +69,7 @@ export const ECommConfig = {
 	},
 };
 
-export const SocialMediaConfig = {
+export const SocialMediaConfig: ConfigOptions = {
 	models: {
 		User: {
 			schema: {
@@ -128,29 +128,83 @@ export const SocialMediaConfig = {
 		},
 		Comment: {
 			schema: {
-				schema: {
-					title: {
-						type: DataType.String,
-						required: true,
-					},
-					postId: {
-						type: DataType.String,
-						required: true,
-					},
-					upvotes: {
-						type: DataType.Integer,
-						default: 0,
-						gte: 0,
-					},
-					downvotes: {
-						type: DataType.Integer,
-						default: 0,
-						gte: 0,
-					},
+				title: {
+					type: DataType.String,
+					required: true,
+				},
+				postId: {
+					type: DataType.String,
+					required: true,
+				},
+				upvotes: {
+					type: DataType.Integer,
+					default: 0,
+					gte: 0,
+				},
+				downvotes: {
+					type: DataType.Integer,
+					default: 0,
+					gte: 0,
 				},
 			},
+			timestamps: true,
 			routes: [DefaultRoutes.ALL],
-			timetsmaps: true,
+		},
+	},
+};
+
+export const BlogConfig: ConfigOptions = {
+	models: {
+		User: {
+			schema: {
+				name: {
+					type: DataType.String,
+					required: true,
+				},
+				email: {
+					type: DataType.String,
+					required: true,
+					isEmail: true,
+				},
+				password: {
+					type: DataType.String,
+					required: true,
+					range: {
+						from: 8,
+						to: 16,
+						inclusive: true,
+					},
+				},
+				followers: {
+					type: DataType.Integer,
+					default: 0,
+				},
+			},
+			timestamps: true,
+			routes: [DefaultRoutes.ALL],
+		},
+		Blog: {
+			schema: {
+				title: {
+					type: DataType.String,
+					required: true,
+					gte: 1
+				},
+				body: {
+					type: DataType.String,
+					required: true,
+					gte: 1
+				},
+				likes: {
+					type: DataType.Integer,
+					default: 0
+				},
+				userId: {
+					type: DataType.String,
+					required: true
+				}
+			},
+			routes: [DefaultRoutes.ALL],
 		},
 	},
 };

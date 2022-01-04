@@ -19,6 +19,7 @@ export enum DefaultRoutes {
 export enum Templates {
 	E_COMM = "e-commerce",
 	SOCIAL_MEDIA = "social-media",
+	BLOG = "blog"
 }
 //comment
 export interface Error {

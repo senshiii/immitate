@@ -8,7 +8,7 @@ import Utils from './Util';
 import FileOps from './data/FileOps';
 import Validator from './validation/Validator';
 import Logger from '../logging/Logger';
-import { ECommConfig, SocialMediaConfig } from '../config/template-configs'
+import { ECommConfig, SocialMediaConfig, BlogConfig } from '../config/template-configs'
 
 const DB_FILE_NAME = 'immitate.db.json';
 
@@ -52,6 +52,7 @@ export default class Server {
 		switch(temp){
 			case Templates.E_COMM: this.setUpEcomm();break;
 			case Templates.SOCIAL_MEDIA:  this.setUpSocialMedia(); break;
+			case Templates.BLOG: this.setUpBlog(); break;
 			default: throw "Invalid Template";
 		}
 	}
@@ -62,6 +63,10 @@ export default class Server {
 	
 	private async setUpSocialMedia() {
 		await this.configureServer(SocialMediaConfig);
+	}
+
+	private async setUpBlog() {
+		await this.configureServer(BlogConfig);
 	}
 
 	async configureServer(config: ConfigOptions) {
