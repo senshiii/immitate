@@ -84,11 +84,11 @@ Templates can be used to quickly initialize a fake server with predefined models
 
 - [Social Media][social-media] - `social-media`
 - [E-Commerce][e-commerce] - `e-commerce`
+- [Blog][blog] - `blog`
 
 ```js
 const { createWithTemplate } = require("immitate")
-createWithTemplate("social-media")
-createWithTemplate("e-commerce")
+createWithTemplate("template-identifier") 
 ```
 
 # Configuration
@@ -279,4 +279,5 @@ Read the changelog [here][Changelog]
 [examples]: https:/github.com/senshiii/immitate/tree/master/examples
 [social-media]: ./templates/social-media.md
 [e-commerce]: ./templates/e-commerce.md
+[blog]: ./templates/blog.md
 [Changelog]: /changelog
